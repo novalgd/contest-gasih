@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOVE</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7d9dd;
+            overflow: hidden;
+            text-align: center; /* Pastikan teks dalam container terpusat */
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+            position: relative;
+            width: 100%; /* Menggunakan 100% lebar layar */
+            max-width: 400px; /* Menentukan lebar maksimal agar tidak terlalu besar */
+            height: auto;
+        }
+
+        h1 {
+            font-size: 26px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .button.yes {
+            background-color: #4CAF50;
+            color: white;
+            margin-bottom: 10px;
+            width: 50%;
+        }
+
+        .button.no {
+            background-color: #f44336;
+            color: white;
+            margin-top: 10px;
+            width: 50%;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        /* Style Popup */
+        .popup {
+            position: absolute; /* Gunakan absolute untuk menempatkan popup */
+            top: 50%; /* Posisi 50% dari atas layar */
+            left: 50%; /* Posisi 50% dari kiri layar */
+            transform: translate(-50%, -50%); /* Geser untuk benar-benar terpusat */
+            width: 80%; /* Lebar popup bisa menyesuaikan */
+            max-width: 600px; /* Set maksimal lebar */
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Style Pop-up Yes */
+        .popup.yes {
+            background: linear-gradient(135deg, #FF9A9E, #FAD0C4, #FFD1FF);
+            color: #333;
+            flex-direction: column;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Style Pop-up No */
+        .popup.no {
+            background-color: #f5f5f5;
+            color: #333;
+            flex-direction: column;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .popup-content {
+            font-size: 28px;
+            font-weight: bold;
+            padding: 30px;
+        }
+
+        /* Text besar untuk "SELAMAT" */
+        .popup-content h1 {
+            font-size: 48px;
+            color: #4CAF50;
+            margin-bottom: 30px;
+        }
+
+        /* Tanggal lebih kecil */
+        .popup-content .date {
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* Emoji love di atas "SELAMAT" */
+        .popup-content .emoji {
+            font-size: 100px;
+            margin-bottom: 10px;
+        }
+
+        /* Button in Pop-up Yes */
+        .popup.yes a {
+            margin-top: 150px; /* Menambahkan lebih banyak jarak dengan teks */
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .popup.yes a:hover {
+            background-color: #45A049;
+        }
+
+        /* Button in Pop-up No */
+        .popup button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .popup button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kamu Mau Gak Jadi Pacar Aku?</h1>
+        <div>
+            <button class="button yes" onclick="yesClicked()">Ya</button>
+        </div>
+        <div>
+            <button class="button no" onclick="noClicked()">Tidak</button>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+        function showPopup(message, type) {
+            const popup = document.createElement('div');
+            popup.className = `popup ${type}`;
+            if (type === 'yes') {
+                popup.innerHTML = `
+                    <div class="popup-content">
+                        <div class="emoji">❤️</div>
+                        <h1>${message}</h1> 
+                        <a href="https://maps.app.goo.gl/fBvjKLCnCtyCDbi19" target="_blank">First Date</a>
+                    </div>
+                `;
+            } else {
+                popup.innerHTML = `
+                    <div class="popup-content">
+                        ${message} <br>
+                        <button onclick="closePopup(this)">Tutup</button>
+                    </div>
+                `;
+            }
+            document.body.appendChild(popup);
+        }
+
+        function closePopup(button) {
+            const popup = button.parentElement.parentElement;
+            document.body.removeChild(popup);
+        }
+
+        function noClicked() {
+            showPopup('MAAF HALAMAN INI SEDANG GANGGUAN!!', 'no');
+        }
+
+        function yesClicked() {
+            const date = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const currentDate = date.toLocaleDateString('id-ID', options);
+            showPopup(`SELAMAT KITA SUDAH JADIAN <br> <span class="date">${currentDate}</span>`, 'yes');
+        }
+    </script>
+</body>
+</html>
